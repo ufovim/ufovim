@@ -9,14 +9,14 @@ $env:XDG_DATA_HOME = ($env:XDG_DATA_HOME, "$env:APPDATA", 1 -ne $null)[0]
 $env:XDG_CONFIG_HOME = ($env:XDG_CONFIG_HOME, "$LOCALAPPDATA", 1 -ne $null)[0]
 $env:XDG_CACHE_HOME = ($env:XDG_CACHE_HOME, "$TEMP", 1 -ne $null)[0]
 $env:UFOVIM_RUNTIME_DIR = ($env:UFOVIM_RUNTIME_DIR, "$env:XDG_DATA_HOME\ufovim", 1 -ne $null)[0]
-$env:ufovim_CONFIG_DIR = ($env:ufovim_CONFIG_DIR, "$env:XDG_CONFIG_HOME\ufovim", 1 -ne $null)[0]
-$env:ufovim_CACHE_DIR = ($env:ufovim_CACHE_DIR, "$env:XDG_CACHE_HOME\ufovim", 1 -ne $null)[0]
+$env:UFOVIM_CONFIG_DIR = ($env:UFOVIM_CONFIG_DIR, "$env:XDG_CONFIG_HOME\ufovim", 1 -ne $null)[0]
+$env:UFOVIM_CACHE_DIR = ($env:UFOVIM_CACHE_DIR, "$env:XDG_CACHE_HOME\ufovim", 1 -ne $null)[0]
 
 
 $__ufovim_dirs = (
-    "$env:ufovim_CONFIG_DIR",
+    "$env:UFOVIM_CONFIG_DIR",
     "$env:UFOVIM_RUNTIME_DIR",
-    "$env:ufovim_CACHE_DIR"
+    "$env:UFOVIM_CACHE_DIR"
 )
 
 function main($cliargs) {
@@ -218,18 +218,18 @@ function setup_ufovim() {
   
     Write-Output "Preparing Packer setup"
 
-    if ((Test-Path "$env:ufovim_CONFIG_DIR") -eq $false) {
-        New-Item "$env:ufovim_CONFIG_DIR" -ItemType Directory
+    if ((Test-Path "$env:UFOVIM_CONFIG_DIR") -eq $false) {
+        New-Item "$env:UFOVIM_CONFIG_DIR" -ItemType Directory
     }
 
     Copy-Item "$env:UFOVIM_RUNTIME_DIR\ufovim\utils\installer\config.example-no-ts.lua" `
-        "$env:ufovim_CONFIG_DIR\config.lua"
+        "$env:UFOVIM_CONFIG_DIR\config.lua"
   
 	Write-Output "Packer setup complete"
 	
 	__add_separator "80"
 
-	Copy-Item "$env:UFOVIM_RUNTIME_DIR\ufovim\utils\installer\config.example.lua" "$env:ufovim_CONFIG_DIR\config.lua"
+	Copy-Item "$env:UFOVIM_RUNTIME_DIR\ufovim\utils\installer\config.example.lua" "$env:UFOVIM_CONFIG_DIR\config.lua"
   
 	$answer = Read-Host $(`
 	"Would you like to create an alias inside your Powershell profile?`n" +`

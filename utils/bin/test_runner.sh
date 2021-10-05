@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 set -e
 
-export ufovim_CONFIG_DIR="${ufovim_CONFIG_DIR:-"$HOME/.config/ufovim"}"
+export UFOVIM_CONFIG_DIR="${UFOVIM_CONFIG_DIR:-"$HOME/.config/ufovim"}"
 export UFOVIM_RUNTIME_DIR="${UFOVIM_RUNTIME_DIR:-"$HOME/.local/share/ufovim"}"
 
-export ufovim_TEST_ENV=true
+export UFOVIM_TEST_ENV=true
 
-rm -f "$ufovim_CONFIG_DIR/plugin/packer_compiled.lua"
+rm -f "$UFOVIM_CONFIG_DIR/plugin/packer_compiled.lua"
 
 ufovim() {
   # TODO: allow running with a minimal_init.lua

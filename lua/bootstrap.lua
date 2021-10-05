@@ -22,20 +22,20 @@ function _G.get_runtime_dir()
   return UFOVIM_RUNTIME_DIR
 end
 
----Get the full path to `$ufovim_CONFIG_DIR`
+---Get the full path to `$UFOVIM_CONFIG_DIR`
 ---@return string
 function _G.get_config_dir()
-  local ufovim_config_dir = os.getenv "ufovim_CONFIG_DIR"
+  local ufovim_config_dir = os.getenv "UFOVIM_CONFIG_DIR"
   if not ufovim_config_dir then
     return vim.fn.stdpath "config"
   end
   return ufovim_config_dir
 end
 
----Get the full path to `$ufovim_CACHE_DIR`
+---Get the full path to `$UFOVIM_CACHE_DIR`
 ---@return string
 function _G.get_cache_dir()
-  local ufovim_cache_dir = os.getenv "ufovim_CACHE_DIR"
+  local ufovim_cache_dir = os.getenv "UFOVIM_CACHE_DIR"
   if not ufovim_cache_dir then
     return vim.fn.stdpath "cache"
   end
@@ -90,7 +90,7 @@ function M:init()
   vim.fn.mkdir(vim.fn.stdpath "cache", "p")
 
   -- FIXME: currently unreliable in unit-tests
-  if not os.getenv "ufovim_TEST_ENV" then
+  if not os.getenv "UFOVIM_TEST_ENV" then
     require("impatient").setup {
       path = vim.fn.stdpath "cache" .. "/ufovim_cache",
       enable_profiling = true,

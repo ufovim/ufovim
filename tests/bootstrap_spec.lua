@@ -7,7 +7,7 @@ a.describe("initial start", function()
   local UFOVIM_RUNTIME_path = get_runtime_dir() or home_dir .. "/.local/share/ufovim"
 
   a.it("shoud be able to detect test environment", function()
-    assert.truthy(os.getenv "ufovim_TEST_ENV")
+    assert.truthy(os.getenv "UFOVIM_TEST_ENV")
     assert.falsy(package.loaded["impatient"])
   end)
 
@@ -19,7 +19,7 @@ a.describe("initial start", function()
   a.it("should be able to read ufovim directories", function()
     local rtp_list = vim.opt.rtp:get()
     assert.truthy(vim.tbl_contains(rtp_list, UFOVIM_RUNTIME_path .. "/ufovim"))
-    assert.truthy(vim.tbl_contains(rtp_list, ufovim_config_path))
+    assert.truthy(vim.tbl_contains(rtp_list, UFOVIM_config_path))
   end)
 
   a.it("should be able to run treesitter without errors", function()
