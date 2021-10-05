@@ -11,9 +11,9 @@ M.defaults = {
   endfunction
   ]],
   -- :UfovimInfo
-  [[command! ufovimInfo lua require('core.info').toggle_popup(vim.bo.filetype)]],
-  [[ command! ufovimCacheReset lua require('bootstrap').reset_cache() ]],
-  [[ command! ufovimUpdate lua require('bootstrap').update() ]],
+  [[command! UfovimInfo lua require('core.info').toggle_popup(vim.bo.filetype)]],
+  [[ command! UfovimCacheReset lua require('bootstrap').reset_cache() ]],
+  [[ command! UfovimUpdate lua require('bootstrap').update() ]],
 }
 
 M.load = function(commands)
