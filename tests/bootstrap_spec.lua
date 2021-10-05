@@ -4,7 +4,7 @@ a.describe("initial start", function()
   local uv = vim.loop
   local home_dir = uv.os_homedir()
   local ufovim_config_path = get_config_dir() or home_dir .. "/.config/ufovim"
-  local ufovim_runtime_path = get_runtime_dir() or home_dir .. "/.local/share/ufovim"
+  local UFOVIM_RUNTIME_path = get_runtime_dir() or home_dir .. "/.local/share/ufovim"
 
   a.it("shoud be able to detect test environment", function()
     assert.truthy(os.getenv "ufovim_TEST_ENV")
@@ -18,7 +18,7 @@ a.describe("initial start", function()
 
   a.it("should be able to read ufovim directories", function()
     local rtp_list = vim.opt.rtp:get()
-    assert.truthy(vim.tbl_contains(rtp_list, ufovim_runtime_path .. "/ufovim"))
+    assert.truthy(vim.tbl_contains(rtp_list, UFOVIM_RUNTIME_path .. "/ufovim"))
     assert.truthy(vim.tbl_contains(rtp_list, ufovim_config_path))
   end)
 

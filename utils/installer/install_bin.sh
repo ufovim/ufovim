@@ -7,7 +7,7 @@ declare -r XDG_DATA_HOME="${XDG_DATA_HOME:-"$HOME/.local/share"}"
 declare -r XDG_CACHE_HOME="${XDG_CACHE_HOME:-"$HOME/.cache"}"
 declare -r XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"$HOME/.config"}"
 
-declare -r ufovim_RUNTIME_DIR="${ufovim_RUNTIME_DIR:-"$XDG_DATA_HOME/ufovim"}"
+declare -r UFOVIM_RUNTIME_DIR="${UFOVIM_RUNTIME_DIR:-"$XDG_DATA_HOME/ufovim"}"
 declare -r ufovim_CONFIG_DIR="${ufovim_CONFIG_DIR:-"$XDG_CONFIG_HOME/ufovim"}"
 
 # TODO: Use a dedicated cache directory #1256
@@ -21,10 +21,10 @@ function setup_shim() {
 #!/bin/sh
 
 export ufovim_CONFIG_DIR="\${ufovim_CONFIG_DIR:-$ufovim_CONFIG_DIR}"
-export ufovim_RUNTIME_DIR="\${ufovim_RUNTIME_DIR:-$ufovim_RUNTIME_DIR}"
+export UFOVIM_RUNTIME_DIR="\${UFOVIM_RUNTIME_DIR:-$UFOVIM_RUNTIME_DIR}"
 export ufovim_CACHE_DIR="\${ufovim_CACHE_DIR:-$ufovim_CACHE_DIR}"
 
-exec nvim -u "\$ufovim_RUNTIME_DIR/ufovim/init.lua" "\$@"
+exec nvim -u "\$UFOVIM_RUNTIME_DIR/ufovim/init.lua" "\$@"
 EOF
   chmod +x "$INSTALL_PREFIX/bin/ufovim"
 }

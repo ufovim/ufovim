@@ -1,6 +1,6 @@
 local path_sep = vim.loop.os_uname().version:match "Windows" and "\\" or "/"
 
-vim.opt.rtp:append(os.getenv "ufovim_RUNTIME_DIR" .. path_sep .. "ufovim")
+vim.opt.rtp:append(os.getenv "UFOVIM_RUNTIME_DIR" .. path_sep .. "ufovim")
 
 require("bootstrap"):init()
 

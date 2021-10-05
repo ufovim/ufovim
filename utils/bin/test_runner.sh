@@ -2,7 +2,7 @@
 set -e
 
 export ufovim_CONFIG_DIR="${ufovim_CONFIG_DIR:-"$HOME/.config/ufovim"}"
-export ufovim_RUNTIME_DIR="${ufovim_RUNTIME_DIR:-"$HOME/.local/share/ufovim"}"
+export UFOVIM_RUNTIME_DIR="${UFOVIM_RUNTIME_DIR:-"$HOME/.local/share/ufovim"}"
 
 export ufovim_TEST_ENV=true
 
@@ -10,7 +10,7 @@ rm -f "$ufovim_CONFIG_DIR/plugin/packer_compiled.lua"
 
 ufovim() {
   # TODO: allow running with a minimal_init.lua
-  nvim -u "$ufovim_RUNTIME_DIR/ufovim/tests/minimal_init.lua" --cmd "set runtimepath+=$ufovim_RUNTIME_DIR/ufovim" "$@"
+  nvim -u "$UFOVIM_RUNTIME_DIR/ufovim/tests/minimal_init.lua" --cmd "set runtimepath+=$UFOVIM_RUNTIME_DIR/ufovim" "$@"
 }
 
 if [ -n "$1" ]; then

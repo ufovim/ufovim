@@ -11,15 +11,15 @@ function _G.join_paths(...)
   return result
 end
 
----Get the full path to `$ufovim_RUNTIME_DIR`
+---Get the full path to `$UFOVIM_RUNTIME_DIR`
 ---@return string
 function _G.get_runtime_dir()
-  local ufovim_runtime_dir = os.getenv "ufovim_RUNTIME_DIR"
-  if not ufovim_runtime_dir then
+  local UFOVIM_RUNTIME_DIR = os.getenv "UFOVIM_RUNTIME_DIR"
+  if not UFOVIM_RUNTIME_DIR then
     -- when nvim is used directly
     return vim.fn.stdpath "config"
   end
-  return ufovim_runtime_dir
+  return UFOVIM_RUNTIME_DIR
 end
 
 ---Get the full path to `$ufovim_CONFIG_DIR`
@@ -71,7 +71,7 @@ function M:init()
   self.packer_install_dir = join_paths(self.runtime_dir, "site", "pack", "packer", "start", "packer.nvim")
   self.packer_cache_path = join_paths(self.config_dir, "plugin", "packer_compiled.lua")
 
-  if os.getenv "ufovim_RUNTIME_DIR" then
+  if os.getenv "UFOVIM_RUNTIME_DIR" then
     vim.opt.rtp:remove(join_paths(vim.fn.stdpath "data", "site"))
     vim.opt.rtp:remove(join_paths(vim.fn.stdpath "data", "site", "after"))
     vim.opt.rtp:prepend(join_paths(self.runtime_dir, "site"))

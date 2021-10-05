@@ -8,14 +8,14 @@ $INSTALL_PREFIX = ($INSTALL_PREFIX, "$HOME\.local", 1 -ne $null)[0]
 $env:XDG_DATA_HOME = ($env:XDG_DATA_HOME, "$env:APPDATA", 1 -ne $null)[0]
 $env:XDG_CONFIG_HOME = ($env:XDG_CONFIG_HOME, "$LOCALAPPDATA", 1 -ne $null)[0]
 $env:XDG_CACHE_HOME = ($env:XDG_CACHE_HOME, "$TEMP", 1 -ne $null)[0]
-$env:ufovim_RUNTIME_DIR = ($env:ufovim_RUNTIME_DIR, "$env:XDG_DATA_HOME\ufovim", 1 -ne $null)[0]
+$env:UFOVIM_RUNTIME_DIR = ($env:UFOVIM_RUNTIME_DIR, "$env:XDG_DATA_HOME\ufovim", 1 -ne $null)[0]
 $env:ufovim_CONFIG_DIR = ($env:ufovim_CONFIG_DIR, "$env:XDG_CONFIG_HOME\ufovim", 1 -ne $null)[0]
 $env:ufovim_CACHE_DIR = ($env:ufovim_CACHE_DIR, "$env:XDG_CACHE_HOME\ufovim", 1 -ne $null)[0]
 
 
 $__ufovim_dirs = (
     "$env:ufovim_CONFIG_DIR",
-    "$env:ufovim_RUNTIME_DIR",
+    "$env:UFOVIM_RUNTIME_DIR",
     "$env:ufovim_CACHE_DIR"
 )
 
@@ -79,7 +79,7 @@ function main($cliargs) {
         }
     }
   
-    if (Test-Path "$env:ufovim_RUNTIME_DIR\site\pack\packer\start\packer.nvim") {
+    if (Test-Path "$env:UFOVIM_RUNTIME_DIR\site\pack\packer\start\packer.nvim") {
         Write-Output "Packer already installed"
     }
     else {
@@ -88,7 +88,7 @@ function main($cliargs) {
   
     __add_separator "80"
   
-    if (Test-Path "$env:ufovim_RUNTIME_DIR\ufovim\init.lua" ) {
+    if (Test-Path "$env:UFOVIM_RUNTIME_DIR\ufovim\init.lua" ) {
         Write-Output "Updating ufovim"
         update_ufovim
     }
@@ -185,18 +185,18 @@ function backup_old_config() {
 
 
 function install_packer() {
-    Invoke-Command -ErrorAction Stop -ScriptBlock { git clone --progress --depth 1 "https://github.com/wbthomason/packer.nvim" "$env:ufovim_RUNTIME_DIR\site\pack\packer\start\packer.nvim" }
+    Invoke-Command -ErrorAction Stop -ScriptBlock { git clone --progress --depth 1 "https://github.com/wbthomason/packer.nvim" "$env:UFOVIM_RUNTIME_DIR\site\pack\packer\start\packer.nvim" }
 }
   
 function copy_local_ufovim_repository() {
     Write-Output "Copy local ufovim configuration"
-    Copy-Item -Path "$((Get-Item $PWD).Parent.Parent.FullName)" -Destination "$env:ufovim_RUNTIME_DIR/ufovim" -Recurse
+    Copy-Item -Path "$((Get-Item $PWD).Parent.Parent.FullName)" -Destination "$env:UFOVIM_RUNTIME_DIR/ufovim" -Recurse
 }
 
 function clone_ufovim() {
     Write-Output "Cloning ufovim configuration"
     try {
-        Invoke-Command -ErrorAction Stop -ScriptBlock { git clone --progress --branch "$LV_BRANCH" --depth 1 "https://github.com/$LV_REMOTE" "$env:ufovim_RUNTIME_DIR/ufovim" } 
+        Invoke-Command -ErrorAction Stop -ScriptBlock { git clone --progress --branch "$LV_BRANCH" --depth 1 "https://github.com/$LV_REMOTE" "$env:UFOVIM_RUNTIME_DIR/ufovim" } 
     }
     catch {
         Write-Output "Failed to clone repository. Installation failed."
@@ -208,7 +208,7 @@ function setup_shim() {
     if ((Test-Path "$INSTALL_PREFIX\bin") -eq $false) {
         New-Item "$INSTALL_PREFIX\bin" -ItemType Directory
     }
-    Copy-Item "$env:ufovim_RUNTIME_DIR\ufovim\utils\bin\ufovim.ps1" -Destination "$INSTALL_PREFIX\bin\ufovim.ps1" -Force
+    Copy-Item "$env:UFOVIM_RUNTIME_DIR\ufovim\utils\bin\ufovim.ps1" -Destination "$INSTALL_PREFIX\bin\ufovim.ps1" -Force
 }
 
 function setup_ufovim() {
@@ -222,14 +222,14 @@ function setup_ufovim() {
         New-Item "$env:ufovim_CONFIG_DIR" -ItemType Directory
     }
 
-    Copy-Item "$env:ufovim_RUNTIME_DIR\ufovim\utils\installer\config.example-no-ts.lua" `
+    Copy-Item "$env:UFOVIM_RUNTIME_DIR\ufovim\utils\installer\config.example-no-ts.lua" `
         "$env:ufovim_CONFIG_DIR\config.lua"
   
 	Write-Output "Packer setup complete"
 	
 	__add_separator "80"
 
-	Copy-Item "$env:ufovim_RUNTIME_DIR\ufovim\utils\installer\config.example.lua" "$env:ufovim_CONFIG_DIR\config.lua"
+	Copy-Item "$env:UFOVIM_RUNTIME_DIR\ufovim\utils\installer\config.example.lua" "$env:ufovim_CONFIG_DIR\config.lua"
   
 	$answer = Read-Host $(`
 	"Would you like to create an alias inside your Powershell profile?`n" +`
@@ -248,10 +248,10 @@ function setup_ufovim() {
 
 function update_ufovim() {
     try {
-        Invoke-Command git -C "$env:ufovim_RUNTIME_DIR/ufovim" status -uno
+        Invoke-Command git -C "$env:UFOVIM_RUNTIME_DIR/ufovim" status -uno
     }
     catch {
-        git -C "$env:ufovim_RUNTIME_DIR/ufovim" pull --ff-only --progress -or
+        git -C "$env:UFOVIM_RUNTIME_DIR/ufovim" pull --ff-only --progress -or
         Write-Output "Unable to guarantee data integrity while updating. Please do that manually instead."
         exit 1
     }
