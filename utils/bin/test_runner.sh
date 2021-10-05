@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -e
+
+export ufovim_CONFIG_DIR="${ufovim_CONFIG_DIR:-"$HOME/.config/ufovim"}"
+export ufovim_RUNTIME_DIR="${ufovim_RUNTIME_DIR:-"$HOME/.local/share/ufovim"}"
+
+export ufovim_TEST_ENV=true
+
+rm -f "$ufovim_CONFIG_DIR/plugin/packer_compiled.lua"
+
+ufovim() {
+  # TODO: allow running with a minimal_init.lua
+  nvim -u "$ufovim_RUNTIME_DIR/ufovim/tests/minimal_init.lua" --cmd "set runtimepath+=$ufovim_RUNTIME_DIR/ufovim" "$@"
+}
+
+if [ -n "$1" ]; then
+  ufovim --headless -c "lua require('plenary.busted').run('$1')"
+else
+  ufovim --headless -c "PlenaryBustedDirectory tests/ { minimal_init = './tests/minimal_init.lua' }"
+fi
