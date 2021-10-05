@@ -10,13 +10,13 @@ local config = require "config"
 config:load()
 
 local plugins = require "plugins"
-require("plugin-loader"):load { plugins, lvim.plugins }
+require("plugin-loader"):load { plugins, ufovim.plugins }
 
 local Log = require "core.log"
-Log:debug "Starting LunarVim"
+Log:debug "Starting UfoVim"
 
-vim.g.colors_name = lvim.colorscheme -- Colorscheme must get called after plugins are loaded or it will break new installs.
-vim.cmd("colorscheme " .. lvim.colorscheme)
+vim.g.colors_name = ufovim.colorscheme -- Colorscheme must get called after plugins are loaded or it will break new installs.
+vim.cmd("colorscheme " .. ufovim.colorscheme)
 
 local commands = require "core.commands"
 commands.load(commands.defaults)
