@@ -10,7 +10,7 @@ M.defaults = {
     endif
   endfunction
   ]],
-  -- :ufovimInfo
+  -- :UfovimInfo
   [[command! ufovimInfo lua require('core.info').toggle_popup(vim.bo.filetype)]],
   [[ command! ufovimCacheReset lua require('bootstrap').reset_cache() ]],
   [[ command! ufovimUpdate lua require('bootstrap').update() ]],
